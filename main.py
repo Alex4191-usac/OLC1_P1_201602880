@@ -115,7 +115,7 @@ class Window_app:
             if (Token_List.get_TypeT()=="Reserved Keyword"):
                 self.text_area.tag_add(str(index)+Token_List.get_Token(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()-len(Token_List.get_Token())),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
                 self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="red")    
-            elif(Token_List.get_TypeT()=="Double Quote comment"):
+            elif(Token_List.get_TypeT()=="Double Quote comment" or Token_List.get_TypeT()=="Single Quote comment"):
                 self.text_area.tag_add(str(index)+Token_List.get_Token(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()-len(Token_List.get_Token())),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
                 self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="yellow")
             elif(Token_List.get_TypeT()=="multiline comment" or Token_List.get_TypeT()=="single comment"):
@@ -123,7 +123,8 @@ class Window_app:
                 self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="gray")
             elif(Token_List.get_TypeT()=="forward-slash"or Token_List.get_TypeT()=="Equality sign" or Token_List.get_TypeT()=="Asterisk" or 
             Token_List.get_TypeT()=="Minus-sing" or Token_List.get_TypeT()=="Plus-sign" or Token_List.get_TypeT()=="Percent" or Token_List.get_TypeT()=="Right parentheses" or
-            Token_List.get_TypeT()=="Left parentheses" or Token_List.get_TypeT()=="Less-than sign" or Token_List.get_TypeT()=="greater-than sign"): 
+            Token_List.get_TypeT()=="Left parentheses" or Token_List.get_TypeT()=="Less-than sign" or Token_List.get_TypeT()=="greater-than sign" or Token_List.get_TypeT()=="or" or
+            Token_List.get_TypeT()=="not" or Token_List.get_TypeT()=="and"): 
                 self.text_area.tag_add(str(index)+Token_List.get_Token(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()-len(Token_List.get_Token())),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
                 self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="orange")
             elif(Token_List.get_TypeT()=="Int" or Token_List.get_TypeT()=="Float"):

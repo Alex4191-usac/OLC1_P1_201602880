@@ -380,7 +380,7 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character #
                     self.column+=1
                 else:
-                    self.Token_Array_Js.append(Token(27,Lexical_Aux,"Identifier",self.row,self.column))
+                    self.Token_Array_Js.append(Token(27,Lexical_Aux,self.Vef_Id(Lexical_Aux),self.row,self.column))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0    
@@ -395,7 +395,7 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character #
                     self.column+=1
             elif(self.status==29):#STATE NUMBER 29
-                    self.Token_Array_Js.append(Token(29,Lexical_Aux,"String token",self.row,self.column))
+                    self.Token_Array_Js.append(Token(29,Lexical_Aux,"Double Quote comment",self.row,self.column))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
@@ -409,7 +409,7 @@ class Js_Lex:
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
             elif(self.status==31):#STATE NUMBER 31
-                    self.Token_Array_Js.append(Token(31,Lexical_Aux,"Char token",self.row,self.column))
+                    self.Token_Array_Js.append(Token(31,Lexical_Aux,"Single Quote comment",self.row,self.column))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
@@ -435,6 +435,14 @@ class Js_Lex:
         self.file_name=""
         self.Data_text_temp=""
     
+    def Vef_Id(self,Token_type):
+        for temp_Token in Token.Special_Tokens:
+            if(Token_type.lower()==Token.Special_Tokens[temp_Token]):
+                return "Reserved Keyword"
+        #the token isn't a Reserved Keyword so that will return a Identifier       
+        return "Identifier"
+
+
     def create_path_Js(self,temp_path_W):
         temp_path=temp_path_W
         if(temp_path_W!=""):
