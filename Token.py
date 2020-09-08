@@ -107,7 +107,21 @@ class Token:
         
         
     }
-       
+
+    Special_Tokens_Js={
+        0:'if',
+        1:'else',
+        2:'for',
+        3:'while',
+        4:'do',
+        5:'continue',
+        6:'break',
+        7:'return',
+        8:'class',
+        9:'constructor',
+        10:'function'
+
+    } 
 
 
     
