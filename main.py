@@ -85,7 +85,7 @@ class Window_app:
             data_extension=""
             text_data=""
             
-        if(data_extension is not ""):
+        if(data_extension!=""):
             content = text_data.read()
             self.text_area.delete(1.0, END)
             self.text_area.insert(INSERT, content)

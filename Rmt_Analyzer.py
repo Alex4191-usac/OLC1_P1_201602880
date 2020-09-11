@@ -33,34 +33,42 @@ class Rmt_Lex:
                 if(assci_code>= 65 and assci_code<=90) or (assci_code>= 97 and assci_code<=122): #token LETTER
                     temp_status=1
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code>=48 and assci_code<=57):#TOKEN NUMBER 
                     temp_status=2
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code==43):#TOKEN +
                     temp_status=3
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code==45):#TOKEN -
                     temp_status=4
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code==42):#TOKEN *
                     temp_status=5
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code==47):#TOKEN  /
                     temp_status=6
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code==40):#TOKEN (
                     temp_status=7
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 elif(assci_code==41):#TOKEN )
                     temp_status=8
                     Lexical_Aux+=temp_character
+                    self.Data_text_temp+=Lexical_Aux
                     self.column+=1
                 else:
                     if(assci_code>=00 and assci_code <=32 and assci_code!=10):
@@ -69,9 +77,14 @@ class Rmt_Lex:
                         self.Token_Array_Rmt_TEMP.append(Token(1,Lexical_Aux,"Last-Token",self.row,self.column))
                         self.row+=1
                         self.column=0
+
+
                         tmp_Rmt=Parser_Rmt()
-                        self.Data_text_temp+=tmp_Rmt.parser_Rmt(self.Token_Array_Rmt_TEMP)+"\n"
+                        tmp_Rmt.parser_Rmt(self.Token_Array_Rmt_TEMP,self.Data_text_temp)
                         self.Token_Array_Rmt_TEMP.clear()
+                        self.Data_text_temp=""
+                    
+                    
                     else: # means lexical Error founded
                         self.status=0
                         self.Errors_Html_Rmt.append(Lexical_Errors(self.row,self.column,temp_character,"The Symbol "+temp_character+"is not part of the Alphabet Language"))
