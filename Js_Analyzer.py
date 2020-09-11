@@ -117,7 +117,7 @@ class Js_Lex:
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
                     self.column+=1
-                elif (assci_code>= 65 and assci_code<=90) or (assci_code>= 97 and assci_code<=122):# token Letter
+                elif(assci_code>= 65 and assci_code<=90) or (assci_code>= 97 and assci_code<=122):# token Letter
                     temp_status=27
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
@@ -362,7 +362,6 @@ class Js_Lex:
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
-                    self.column+=1 
             elif(self.status==27):# STATE NUMBER 27
                 if (assci_code>= 65 and assci_code<=90) or (assci_code>= 97 and assci_code<=122):# Letter
                     temp_status=27

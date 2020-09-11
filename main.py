@@ -2,6 +2,7 @@ from tkinter import Tk,Menu,scrolledtext,END,filedialog,INSERT,messagebox
 from Html_Analyzer import Html_lex
 from Js_Analyzer import Js_Lex
 from Css_Analyzer import Css_Lex
+from Rmt_Analyzer import Rmt_Lex
 class Window_app:
      
     text_area=None
@@ -40,10 +41,12 @@ class Window_app:
         menu_bar.add_cascade(label="Tools",menu=tools_menu)
         menu_bar.add_cascade(label="Help",menu=help_menu)
 
-        global temp_htmlAnalyzer,temp_jsAnalizer,temp_CssAnalyzer
+        global temp_htmlAnalyzer,temp_jsAnalizer,temp_CssAnalyzer,temp_RmtAnalyzer
         temp_htmlAnalyzer = Html_lex()
         temp_jsAnalizer = Js_Lex()
         temp_CssAnalyzer = Css_Lex()
+        temp_RmtAnalyzer = Rmt_Lex()
+        
         #class instance's
    
 
@@ -53,20 +56,15 @@ class Window_app:
 
     
     def Open_Data(self):
-        self.name_file=""
-        self.file_open = filedialog.askopenfilename(title = "Open File", initialdir = "C:/",filetypes=[("JavaScript Files","*.js"),
-        ("Html Files","*.html"),("Css Files","*.css"),("Rmt Files","*.rmt")])
-  
         try:
-            text_data = open(self.file_open)
+            self.name_file=""
+            self.file_open = filedialog.askopenfilename(title = "Open File", initialdir = "C:/",filetypes=[("JavaScript Files","*.js"),
+            ("Html Files","*.html"),("Css Files","*.css"),("Rmt Files","*.rmt")])
+            text_data = open(self.file_open, encoding='utf-8')
             data_extension=str(text_data.name)
             sub_name=text_data.name.split("/")
             self.name_file=sub_name[len(sub_name)-1]
-        except FileNotFoundError:
-            print("File not Found")
-            data_extension=""
-            text_data=""
-        finally:
+
             if(data_extension.endswith('.js')):
                 self.type_Analizer="js"
                 print("JAVASCRIPT ANALYZER ON")
@@ -82,14 +80,20 @@ class Window_app:
             else:
                 print("THERE'S NO EXTENSION")
                 self.type_Analizer=""
-
-            if(data_extension is not ""):
-                content = text_data.read()
-                self.text_area.delete(1.0, END)
-                self.text_area.insert(INSERT, content)
-                text_data.close()
-            else:
-                self.text_area.delete(1.0, END)
+        except FileNotFoundError:
+            print("File not Found")
+            data_extension=""
+            text_data=""
+            
+        if(data_extension is not ""):
+            content = text_data.read()
+            self.text_area.delete(1.0, END)
+            self.text_area.insert(INSERT, content)
+            text_data.close()
+        else:
+            self.text_area.delete(1.0, END)
+            
+           
                 
             
 #save file as data method
@@ -143,6 +147,7 @@ class Window_app:
         temp_jsAnalizer.clear_method()
         temp_htmlAnalyzer.clear_method()
         temp_CssAnalyzer.clear_method()
+        temp_RmtAnalyzer.clear_method()
 
         if(self.type_Analizer=="js"):
             temp_jsAnalizer.Analyze_text_Js(self.text_area.get(1.0,END),self.name_file)
@@ -154,7 +159,10 @@ class Window_app:
             temp_CssAnalyzer.Analyze_text(self.text_area.get(1.0, END))
             self.Tokens_Color(temp_CssAnalyzer.Token_Array_Css)
             self.text_console.insert(INSERT, temp_CssAnalyzer.Log_Analyzer)
-            
+        elif(self.type_Analizer=="rmt"):
+            temp_RmtAnalyzer.Analyze_text_Rmt(self.text_area.get(1.0, END))
+            self.Tokens_Color(temp_RmtAnalyzer.Token_Array_Rmt)
+            self.text_console.insert(INSERT, temp_RmtAnalyzer.Data_text_temp)
         else:
             messagebox.showerror(title="Warning", message="There's no File to Analyze")
 
