@@ -162,7 +162,8 @@ class Window_app:
         elif(self.type_Analizer=="rmt"):
             temp_RmtAnalyzer.Analyze_text_Rmt(self.text_area.get(1.0, END))
             self.Tokens_Color(temp_RmtAnalyzer.Token_Array_Rmt)
-            self.text_console.insert(INSERT, temp_RmtAnalyzer.Data_text_temp)
+            self.text_console.insert(INSERT, temp_RmtAnalyzer.result_board)
+            
         else:
             messagebox.showerror(title="Warning", message="There's no File to Analyze")
 

@@ -19,8 +19,7 @@ class Parser_Rmt:
         self.E()
         p_temp=self.check(self.Data_tmp)
         p_analysys=self.full_return(self.correct_analysys,p_temp)
-        print("full analysys result:")
-        print(p_analysys)
+        return p_analysys
         
 
     
@@ -68,6 +67,7 @@ class Parser_Rmt:
         if (type_Token!=self.post_analisys.get_TypeT()):
             self.correct_analysys="Incorrecto"
             print("se esperaba"+self.post_analisys.get_TypeT())
+            print("y vino "+type_Token)
         if(self.post_analisys.get_TypeT()!="Last-Token"):
             self.num_before_analsys+=1
             self.post_analisys=self.Token_List[self.num_before_analsys]
@@ -83,14 +83,18 @@ class Parser_Rmt:
                     (self.open_list[pos] == stack[len(stack)-1])): 
                     stack.pop() 
                 else: 
-                    return "Unbalanced"
+                    return "Incorrecto"
         if len(stack) == 0: 
             return "Correcto"
         else: 
             return "Incorrecto"
 
     def full_return(self,parser,parentheses):
-        if (parser==parentheses):
+        print("PARSER-> "+parser)
+        print("METODO->"+parentheses)
+        if (parser=="Incorrecto" and parentheses=="Incorrecto"):
+            return "Incorrecto"
+        elif(parser=="Correcto" and parentheses=="Correcto"):
             return "Correcto"
         else:
            return "Incorrecto"
