@@ -16,6 +16,7 @@ class Js_Lex:
         self.Data_text_temp=""
         self.row=1
         self.column=0
+        self.index=""
 
     def Analyze_text_Js(self,data_text,self_name):
         self.file_name=self_name
@@ -34,6 +35,7 @@ class Js_Lex:
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
                     self.column+=1
+                    self.index=str(self.row)+"."+str(self.column)
                 elif(assci_code==61): #Token =
                     temp_status=2
                     Lexical_Aux+=temp_character
@@ -161,91 +163,91 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character
                     self.column+=1
                 else:
-                    self.Token_Array_Js.append(Token(1,Lexical_Aux,"forward-slash",self.row,self.column))
+                    self.Token_Array_Js.append(Token(1,Lexical_Aux,"forward-slash",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
                     #self.column+=1
             elif(self.status==2):#STATE NUMBER 2
-                self.Token_Array_Js.append(Token(2,Lexical_Aux,"equality sign",self.row,self.column))
+                self.Token_Array_Js.append(Token(2,Lexical_Aux,"equality sign",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==3):#STATE NUMBER 3
-                self.Token_Array_Js.append(Token(3,Lexical_Aux,"Asterisk",self.row,self.column))
+                self.Token_Array_Js.append(Token(3,Lexical_Aux,"Asterisk",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==4):#STATE NUMBER 4
-                self.Token_Array_Js.append(Token(4,Lexical_Aux,"Plus-Sign",self.row,self.column))
+                self.Token_Array_Js.append(Token(4,Lexical_Aux,"Plus-sign",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==5):#STATE NUMBER 5
-                self.Token_Array_Js.append(Token(5,Lexical_Aux,"Minus-Sign",self.row,self.column))
+                self.Token_Array_Js.append(Token(5,Lexical_Aux,"Minus-Sign",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==6):#STATE NUMBER 6
-                self.Token_Array_Js.append(Token(6,Lexical_Aux,"semi-colon",self.row,self.column))
+                self.Token_Array_Js.append(Token(6,Lexical_Aux,"semi-colon",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==7):#STATE NUMBER 7
-                self.Token_Array_Js.append(Token(7,Lexical_Aux,"Left parentheses",self.row,self.column))
+                self.Token_Array_Js.append(Token(7,Lexical_Aux,"Left parentheses",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==8):#STATE NUMBER 8
-                self.Token_Array_Js.append(Token(8,Lexical_Aux,"Right parentheses",self.row,self.column))
+                self.Token_Array_Js.append(Token(8,Lexical_Aux,"Right parentheses",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==9):#STATE NUMBER 9
-                self.Token_Array_Js.append(Token(9,Lexical_Aux,"Left curly bracket",self.row,self.column))
+                self.Token_Array_Js.append(Token(9,Lexical_Aux,"Left curly bracket",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==10):#STATE NUMBER 10
-                self.Token_Array_Js.append(Token(10,Lexical_Aux,"Right curly bracket",self.row,self.column))
+                self.Token_Array_Js.append(Token(10,Lexical_Aux,"Right curly bracket",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==11):#STATE NUMBER 11
-                self.Token_Array_Js.append(Token(11,Lexical_Aux,"Dot",self.row,self.column))
+                self.Token_Array_Js.append(Token(11,Lexical_Aux,"Dot",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==12):#STATE NUMBER 12
-                self.Token_Array_Js.append(Token(12,Lexical_Aux,"comma",self.row,self.column))
+                self.Token_Array_Js.append(Token(12,Lexical_Aux,"comma",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==13):#STATE NUMBER 13
-                self.Token_Array_Js.append(Token(13,Lexical_Aux,"Less-than sign",self.row,self.column))
+                self.Token_Array_Js.append(Token(13,Lexical_Aux,"Less-than sign",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==14):#STATE NUMBER 14
-                self.Token_Array_Js.append(Token(14,Lexical_Aux,"greater-than symbol",self.row,self.column))
+                self.Token_Array_Js.append(Token(14,Lexical_Aux,"greater-than symbol",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==15):#STATE NUMBER 15
-                self.Token_Array_Js.append(Token(15,Lexical_Aux,"not",self.row,self.column))
+                self.Token_Array_Js.append(Token(15,Lexical_Aux,"not",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
@@ -254,7 +256,6 @@ class Js_Lex:
                 if(assci_code==38): # Token &
                     temp_status=17
                     Lexical_Aux+=temp_character
-
                     #grabs the lex before the validations
                     sub_temp=data_text[counter-1]
                     self.Data_text_temp+=sub_temp
@@ -265,7 +266,7 @@ class Js_Lex:
                     self.Errors_Html_Js.append(Lexical_Errors(self.row,self.column,data_text[counter-1],"The Symbol "+temp_character+"is not part of the Alphabet Language"))
                     self.column+=1
             elif(self.status==17):#STATE NUMBER 17
-                self.Token_Array_Js.append(Token(18,Lexical_Aux,"and",self.row,self.column))
+                self.Token_Array_Js.append(Token(18,Lexical_Aux,"and",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
@@ -274,12 +275,13 @@ class Js_Lex:
                     temp_status=19
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
+                    self.column+=1
                 else:
                     temp_status=0
                     self.Errors_Html_Js.append(Lexical_Errors(self.row,self.column,data_text[counter-1],"The Symbol "+temp_character+"is not part of the Alphabet Language"))
-                self.column+=1
+                    self.column+=1
             elif(self.status==19):#STATE NUMBER 19
-                self.Token_Array_Js.append(Token(19,Lexical_Aux,"or",self.row,self.column))
+                self.Token_Array_Js.append(Token(19,Lexical_Aux,"or",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0   
@@ -296,22 +298,30 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character
                     self.column+=1
                 else:
-                    self.multi_flag=False
-                    temp_status=20
-                    Lexical_Aux+=temp_character
-                    self.Data_text_temp+=temp_character
-                    self.column+=1
+                    if(assci_code==10):#enter key
+                        self.multi_flag=False
+                        temp_status=20
+                        Lexical_Aux+=temp_character
+                        self.Data_text_temp+=temp_character
+                        self.row+=1
+                        self.column=0
+                    else:
+                        self.multi_flag=False
+                        temp_status=20
+                        Lexical_Aux+=temp_character
+                        self.Data_text_temp+=temp_character
+                        self.column+=1
             elif(self.status==21):#STATE NUMBER 20
                 if(assci_code==10):# Token enter
-                    path_t=(Lexical_Aux.find("PATHW") or Lexical_Aux.find("PATHL"))
+                    path_t=(Lexical_Aux.find("PATHW"))
                     if(path_t!=-1): # its a file path
                         self.path_file=Lexical_Aux
-                        self.Token_Array_Js.append(Token(21,Lexical_Aux,"path",self.row,self.column))
+                        self.Token_Array_Js.append(Token(21,Lexical_Aux,"path",self.row,self.column,""))
                         Lexical_Aux=""
                         counter-=1
                         temp_status=0
                     else: # isn't a file path
-                        self.Token_Array_Js.append(Token(21,Lexical_Aux,"single comment",self.row,self.column))
+                        self.Token_Array_Js.append(Token(21,Lexical_Aux,"single comment",self.row,self.column,""))
                         Lexical_Aux=""
                         counter-=1
                         temp_status=0
@@ -322,7 +332,7 @@ class Js_Lex:
                     self.column+=1  
             elif(self.status==22):#STATE NUMBER 22 
                 self.multi_flag=False
-                self.Token_Array_Js.append(Token(21,Lexical_Aux,"multiline comment",self.row,self.column))
+                self.Token_Array_Js.append(Token(21,Lexical_Aux,"multiline comment",self.row,self.column,self.index))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
@@ -338,7 +348,8 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character
                     self.column+=1
                 else:
-                    self.Token_Array_Js.append(Token(21,Lexical_Aux,"Integer",self.row,self.column))
+                    
+                    self.Token_Array_Js.append(Token(21,Lexical_Aux,"Int",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0 
@@ -358,7 +369,7 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character
                     self.column+=1
                 else:
-                    self.Token_Array_Js.append(Token(21,Lexical_Aux,"Float",self.row,self.column))
+                    self.Token_Array_Js.append(Token(21,Lexical_Aux,"Float",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
@@ -379,7 +390,7 @@ class Js_Lex:
                     self.Data_text_temp+=temp_character #
                     self.column+=1
                 else:
-                    self.Token_Array_Js.append(Token(27,Lexical_Aux,self.Vef_Id(Lexical_Aux),self.row,self.column))
+                    self.Token_Array_Js.append(Token(27,Lexical_Aux,self.Vef_Id(Lexical_Aux),self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0    
@@ -388,13 +399,14 @@ class Js_Lex:
                     temp_status=29
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
+                    self.column+=1
                 else:
                     temp_status=28
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
                     self.column+=1
             elif(self.status==29):#STATE NUMBER 29
-                    self.Token_Array_Js.append(Token(29,Lexical_Aux,"Double Quote comment",self.row,self.column))
+                    self.Token_Array_Js.append(Token(29,Lexical_Aux,"Double Quote comment",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
@@ -403,17 +415,19 @@ class Js_Lex:
                     temp_status=31
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
+                    self.column+=1
                 else:
                     temp_status=30
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
+                    self.column+=1
             elif(self.status==31):#STATE NUMBER 31
-                    self.Token_Array_Js.append(Token(31,Lexical_Aux,"Single Quote comment",self.row,self.column))
+                    self.Token_Array_Js.append(Token(31,Lexical_Aux,"Single Quote comment",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
             elif(self.status==32):#STATE NUMBER 32
-                    self.Token_Array_Js.append(Token(32,Lexical_Aux,"Double dot token",self.row,self.column))
+                    self.Token_Array_Js.append(Token(32,Lexical_Aux,"Double dot token",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
@@ -435,27 +449,37 @@ class Js_Lex:
         self.Data_text_temp=""
     
     def Vef_Id(self,Token_type):
-        for temp_Token in Token.Special_Tokens:
-            if(Token_type.lower()==Token.Special_Tokens[temp_Token]):
+        for temp_Token in Token.Special_Tokens_Js:
+            if(Token_type.lower()==Token.Special_Tokens_Js[temp_Token]):
                 return "Reserved Keyword"
         #the token isn't a Reserved Keyword so that will return a Identifier       
         return "Identifier"
+
+    def replaceMultiple(self,mainString, toBeReplaces, newString):
+    # Iterate over the strings to be replaced
+        for elem in toBeReplaces :
+            # Check if string is in the main string
+            if elem in mainString :
+            # Replace the string
+                mainString = mainString.replace(elem, newString)
+        
+        return  mainString
 
 
     def create_path_Js(self,temp_path_W):
         temp_path=temp_path_W
         if(temp_path_W!=""):
-            system_temp=platform.system()
             temp_path=""
-
-            if(system_temp=='Linux'):
-                temp_path=temp_path_W.split('PATHL:',1)
-                temp_path=temp_path[1]
+            temp_path=temp_path_W.split('PATHW:',1)
+            temp_path=temp_path[1]
+            otherStr = self.replaceMultiple(temp_path, ['!', '*', '?','<','>'] , "")
+            temp_path=otherStr
+            if(temp_path[len(temp_path)-1]=="/"):
+                #we slice the string
+                temp_path=temp_path[:len(temp_path)-1]
+                temp_path=temp_path.replace("/","//")
             else:
-                temp_path=temp_path_W.split('PATHW:',1)
-                temp_path=temp_path[1]
-
-            temp_path=temp_path.replace("/","//")
+                temp_path=temp_path.replace("/","//")
             if(os.path.exists(temp_path)==False):
                 try:
                     os.makedirs(temp_path,mode=0o444)
@@ -481,7 +505,7 @@ class Js_Lex:
 
     #Error Html Report
     def Errores_Report(self): 
-        file_temp=open('Error_Js_Report.html','w')
+        file_temp=open('Error_Js_Report.html','w',encoding='utf-8')
         file_temp.write("<!doctype html>\n")
         file_temp.write("<html>\n")
         file_temp.write("<head>\n")
@@ -511,18 +535,31 @@ class Js_Lex:
         file_temp.close()
         os.system('Error_Js_Report.html')
 
+
+
+    def print_SizeTokens(self):
+        for token_values in self.Token_Array_Js:
+              print(token_values.get_Token())
+              print(token_values.get_TypeT())
+              print(token_values.get_Row())
+              print(token_values.get_Column())
+              print("el index")
+              print(token_values.get_Index())
+
     def Report_Decision(self):
         if(len(self.Errors_Html_Js)==0):# clean Execution ( no errors founded !!!)
             #self.Tokens_Report()
+            self.print_SizeTokens()
             print("grafo")        
         else:
             print("TIENE eRORORES")
             #self.Tokens_Report()
+            self.print_SizeTokens()
             self.Errores_Report()
 
-        path_token=self.create_path_Js(self.path_file)
-        if(path_token==""):
-            pt=r'C:\Users\Bryan\Desktop\Output_temporal'
+        
+        #path_token=self.create_path_Js(self.path_file)
+        """if(path_token==""):
             os.makedirs(pt,mode=0o444)
             completeName = os.path.join(pt, self.file_name)         
             file1 = open(completeName, "w")
@@ -532,4 +569,4 @@ class Js_Lex:
             completeName = os.path.join(path_token, self.file_name)  
             file1 = open(completeName, "w")
             file1.write(self.Data_text_temp)
-            file1.close()
+            file1.close()"""

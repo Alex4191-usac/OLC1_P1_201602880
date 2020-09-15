@@ -483,7 +483,7 @@ class Css_Lex:
 
     #Error Html Report
     def Errores_Report(self): 
-        file_temp=open('Error_Css_Report.html','w')
+        file_temp=open('Error_Css_Report.html','w',encoding='utf-8')
         file_temp.write("<!doctype html>\n")
         file_temp.write("<html>\n")
         file_temp.write("<head>\n")

@@ -308,7 +308,7 @@ class Html_lex:
 
     #Html File Method
     def Tokens_Report(self): 
-        file_temp=open('Html_Report.html','w')
+        file_temp=open('Html_Report.html','w',encoding='utf-8')
         file_temp.write("<!doctype html>\n")
         file_temp.write("<html>\n")
         file_temp.write("<head>\n")

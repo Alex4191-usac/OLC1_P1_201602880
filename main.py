@@ -115,6 +115,7 @@ class Window_app:
 
 #FOREGROUND CHANGE COLOR:
     def Tokens_Color(self,Array_Tokens):
+        print("VA A PINTAR TOKENS")
         for index,Token_List in enumerate(Array_Tokens): 
             if (Token_List.get_TypeT()=="Reserved Keyword"):
                 self.text_area.tag_add(str(index)+Token_List.get_Token(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()-len(Token_List.get_Token())),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
@@ -122,7 +123,10 @@ class Window_app:
             elif(Token_List.get_TypeT()=="Double Quote comment" or Token_List.get_TypeT()=="Single Quote comment"):
                 self.text_area.tag_add(str(index)+Token_List.get_Token(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()-len(Token_List.get_Token())),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
                 self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="yellow")
-            elif(Token_List.get_TypeT()=="multiline comment" or Token_List.get_TypeT()=="single comment"):
+            elif(Token_List.get_TypeT()=="multiline comment"):
+                self.text_area.tag_add(str(index)+Token_List.get_Token(),Token_List.get_Index(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
+                self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="gray")
+            elif(Token_List.get_TypeT()=="single comment"):
                 self.text_area.tag_add(str(index)+Token_List.get_Token(),str(Token_List.get_Row())+"."+str(Token_List.get_Column()-len(Token_List.get_Token())),str(Token_List.get_Row())+"."+str(Token_List.get_Column()))
                 self.text_area.tag_config(str(index)+Token_List.get_Token(), foreground="gray")
             elif(Token_List.get_TypeT()=="forward-slash"or Token_List.get_TypeT()=="Equality sign" or Token_List.get_TypeT()=="Asterisk" or 
@@ -148,8 +152,13 @@ class Window_app:
         temp_htmlAnalyzer.clear_method()
         temp_CssAnalyzer.clear_method()
         temp_RmtAnalyzer.clear_method()
+    
 
-        if(self.type_Analizer=="js"):
+    #test js
+        temp_jsAnalizer.Analyze_text_Js(self.text_area.get(1.0,END),self.name_file)
+        self.Tokens_Color(temp_jsAnalizer.Token_Array_Js)
+        
+        """if(self.type_Analizer=="js"):
             temp_jsAnalizer.Analyze_text_Js(self.text_area.get(1.0,END),self.name_file)
             self.Tokens_Color(temp_jsAnalizer.Token_Array_Js)
         elif(self.type_Analizer=="html"):
@@ -165,7 +174,7 @@ class Window_app:
             self.text_console.insert(INSERT, temp_RmtAnalyzer.result_board)
             
         else:
-            messagebox.showerror(title="Warning", message="There's no File to Analyze")
+            messagebox.showerror(title="Warning", message="There's no File to Analyze")"""
 
 if __name__ == "__main__":
     gui_window = Tk()

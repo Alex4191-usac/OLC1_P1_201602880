@@ -1,12 +1,13 @@
 class Token:
 
        
-    def __init__(self,id_Token, lex_Token, type_Token, row_Token, column_Token):
+    def __init__(self,id_Token, lex_Token, type_Token, row_Token, column_Token, index):
         self.id_Token=id_Token
         self.lex_Token=lex_Token
         self.type_Token=type_Token
         self.row_Token=row_Token
         self.column_Token=column_Token
+        self.index=index
     
     def get_Id(self):
         return self.id_Token
@@ -23,6 +24,9 @@ class Token:
     def get_Column(self):
         return self.column_Token
 
+    def get_Index(self):
+        return self.index
+        
     Special_Tokens={
                 0:'html',
                 1:'head',
