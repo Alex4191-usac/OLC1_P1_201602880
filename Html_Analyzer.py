@@ -1,6 +1,7 @@
 import os
 import platform
 from Token import Token
+from tkinter import messagebox
 from Errors import Lexical_Errors
 class Html_lex:
     
@@ -15,6 +16,7 @@ class Html_lex:
         self.Data_text_temp=""
         self.Text_Flag=False
         self.multi_flag=False
+        self.index=""
 
 
 
@@ -35,6 +37,7 @@ class Html_lex:
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
                     self.column+=1
+                    self.index=str(self.row)+"."+str(self.column)
                 elif(assci_code==62):# token >
                     self.Text_Flag=True
                     temp_status=2
@@ -126,28 +129,10 @@ class Html_lex:
                     self.Data_text_temp+=temp_character #
                     self.column+=1 
             elif(self.status==4):# STATE NUMBER 4
-                if (assci_code==47):# token / 
-                    temp_status=5
-                    Lexical_Aux+=temp_character
-                    self.Data_text_temp+=temp_character #
-                    self.column+=1 
-                else:
                     self.Token_Array.append(Token(4,Lexical_Aux,"forward-slash",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
-            elif(self.status==5): # STATE NUMBER 5
-                if(assci_code==10):# enter Key
-                    self.Token_Array.append(Token(5,Lexical_Aux,"Path",self.row,self.column,""))
-                    self.path_file=Lexical_Aux
-                    Lexical_Aux=""
-                    counter-=1
-                    temp_status=0
-                else:
-                   temp_status=5
-                   Lexical_Aux+=temp_character
-                   #self.Data_text_temp+=temp_character #
-                   self.column+=1
             elif(self.status==6): # STATE NUMBER 6
                 self.Token_Array.append(Token(6,Lexical_Aux,"Equality sign",self.row,self.column,""))
                 Lexical_Aux=""
@@ -197,7 +182,6 @@ class Html_lex:
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
                 else:
-                    print("ENTROOO")
                     self.status=0
                     self.Errors_Html.append(Lexical_Errors(self.row,self.column,temp_character,"The Symbol "+temp_character+"is not part of the Alphabet Language"))
                 self.column+=1
@@ -205,31 +189,53 @@ class Html_lex:
                 if(assci_code==45): #TOKEN -
                     temp_status=14
                     Lexical_Aux+=temp_character
-                    self.Data_text_temp+=temp_character    
-                else:
-                    self.multi_flag=False
-                    temp_status=13
-                    Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
-                self.column+=1  
+                    self.column+=1    
+                else:
+                    if(assci_code==10):
+                        self.multi_flag=False
+                        temp_status=13
+                        Lexical_Aux+=temp_character
+                        self.Data_text_temp+=temp_character
+                        self.column=0
+                        self.row+=1
+                    else:
+                        self.multi_flag=False
+                        temp_status=13
+                        Lexical_Aux+=temp_character
+                        self.Data_text_temp+=temp_character
+                        self.column+=1
             elif (self.status==14):#STATE NUMBER 14
                 if(assci_code==45):#TOKEN -
                     self.multi_flag=True
                     temp_status=14
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
+                    self.column+=1
                 elif(assci_code==62 and self.multi_flag==True):#TOKEN >
+                    path_t=(Lexical_Aux.lower().find("pathw:"))
+                    if(path_t!=-1):
+                        self.path_file=Lexical_Aux
                     temp_status=15
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character
+                    self.column+=1
                 else:
-                    self.multi_flag=False
-                    temp_status=13
-                    Lexical_Aux+=temp_character
-                    self.Data_text_temp+=temp_character
-                self.column+=1 
+                    if(assci_code==10):
+                        self.multi_flag=False
+                        temp_status=13
+                        Lexical_Aux+=temp_character
+                        self.Data_text_temp+=temp_character
+                        self.column=0
+                        self.row+=1
+                    else:
+                        self.multi_flag=False
+                        temp_status=13
+                        Lexical_Aux+=temp_character
+                        self.Data_text_temp+=temp_character
+                        self.column+=1
             elif(self.status==15):#STATE NUMBER 15
-                self.Token_Array.append(Token(8,Lexical_Aux,"multiline comment",self.row,self.column,""))
+                self.Token_Array.append(Token(8,Lexical_Aux,"multiline comment",self.row,self.column,self.index))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
@@ -253,22 +259,36 @@ class Html_lex:
         self.Data_text_temp=""
         self.Text_Flag=False
         self.multi_flag=False
+        self.index=""
+
+
+    def replaceMultiple(self,mainString, toBeReplaces, newString):
+    # Iterate over the strings to be replaced
+        for elem in toBeReplaces :
+            # Check if string is in the main string
+            if elem in mainString :
+            # Replace the string
+                mainString = mainString.replace(elem, newString)
+        
+        return  mainString
 
     #File's output dir
     def create_path_Js(self,temp_path_W):
         temp_path=temp_path_W
         if(temp_path_W!=""):
-            system_temp=platform.system()
             temp_path=""
-
-            if(system_temp=='Linux'):
-                temp_path=temp_path_W.split('PATHL:',1)
-                temp_path=temp_path[1]
+            temp_path=temp_path_W.lower().split("output",1)
+            temp_path=temp_path[1]
+            otherStr = self.replaceMultiple(temp_path, ['!','@','#','$', '*', '?','<','>'] , "")
+            otherStr=otherStr.strip()
+            new_p=temp_path[0:len(temp_path)-2]
+            temp_path="C:/Users/bryan/Desktop/P1/Output"+new_p
+            if(temp_path[len(temp_path)-1]=="/"):
+                #we slice the string
+                temp_path=temp_path[:len(temp_path)-1]
+                temp_path=temp_path.replace("/","//")
             else:
-                temp_path=temp_path_W.split('PATHW:',1)
-                temp_path=temp_path[1]
-
-            temp_path=temp_path.replace("/","//")
+                temp_path=temp_path.replace("/","//")
             if(os.path.exists(temp_path)==False):
                 try:
                     os.makedirs(temp_path,mode=0o777)
@@ -382,32 +402,43 @@ class Html_lex:
     
     def Report_Decision(self):
         if(len(self.Errors_Html)==0):# clean Execution ( no errors founded !!!)
-            self.Tokens_Report()            
+            pass
         else:
             self.Tokens_Report()
             self.Errores_Report()
-
+        print(self.path_file)
         path_token=self.create_path_Js(self.path_file)
+        completeName=None
         if(path_token==""):
-            tmp_path=r'C:\user\Output'
-            if (os.path.isdir(tmp_path)==False):
-                print('The directory is not present. Creating a new one..')
-                os.makedirs(tmp_path,mode=0o444)
+            messagebox.showwarning(title="File", message="Alternative Path was created")
+            pt=r'C:/Users/bryan/Desktop/P1/Output'
+            if(os.path.exists(pt)==True):
+                completeName = os.path.join(pt, self.file_Name)
             else:
-                print('The directory is present.')
-                
-            #completeName = os.path.join(r'C:\Users\Bryan\Desktop\Output_temporal', self.file_Name)         
-            #file1 = open(completeName, "w")
-            #file1.write(self.Data_text_temp)
-            #file1.close()
+                os.makedirs(pt,mode=0o444)
+                completeName = os.path.join(pt, self.file_Name)
+            if(os.path.exists(completeName)):
+                    os.remove(completeName)
+                    file1 = open(completeName, "w")
+                    file1.write(self.Data_text_temp)
+                    file1.close()
+            else:         
+                file1 = open(completeName, "w")
+                file1.write(self.Data_text_temp)
+                file1.close()           
         else:
-            print("ok")
-            completeName = os.path.join(path_token, self.file_Name)  
-            file1 = open(completeName, "w")
-            file1.write(self.Data_text_temp)
-            file1.close()
-                        
-
+            complete_path=path_token+"//"+self.file_Name
+            if(os.path.isfile(complete_path)==True):
+                os.remove(complete_path)
+                file1 = open(complete_path, "w")
+                file1.write(self.Data_text_temp)
+                file1.close() 
+            else:
+                print("js")
+                print(complete_path)
+                file1 = open(complete_path, "w")
+                file1.write(self.Data_text_temp)
+                file1.close()  
     
     
     
