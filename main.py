@@ -53,6 +53,7 @@ class Window_app:
     def New_Data(self):
         self.text_area.delete(1.0,END)
         self.text_console.delete(1.0,END)
+        self.file_open=None
 
     
     def Open_Data(self):
@@ -64,7 +65,7 @@ class Window_app:
             data_extension=str(text_data.name)
             sub_name=text_data.name.split("/")
             self.name_file=sub_name[len(sub_name)-1]
-
+            print(self.name_file)
             if(data_extension.endswith('.js')):
                 self.type_Analizer="js"
                 print("JAVASCRIPT ANALYZER ON")
@@ -109,7 +110,7 @@ class Window_app:
         if self.file_open is None:
             self.save_As()
         else:
-            open_buffer=open(self.file_open,"w")
+            open_buffer=open(self.file_open,"w+")
             open_buffer.write(self.text_area.get(1.0,END))
             open_buffer.close()
 
@@ -163,7 +164,7 @@ class Window_app:
             temp_htmlAnalyzer.Analyze_text(self.text_area.get(1.0, END),self.name_file)
             self.Tokens_Color(temp_htmlAnalyzer.Token_Array)
         elif(self.type_Analizer=="css"):
-            temp_CssAnalyzer.Analyze_text(self.text_area.get(1.0, END),self.name_file)
+            temp_CssAnalyzer.Analyze_text_Css(self.text_area.get(1.0, END),self.name_file)
             self.Tokens_Color(temp_CssAnalyzer.Token_Array_Css)
             self.text_console.insert(INSERT, temp_CssAnalyzer.Log_Analyzer)
         elif(self.type_Analizer=="rmt"):

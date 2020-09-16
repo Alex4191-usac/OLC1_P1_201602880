@@ -1,5 +1,6 @@
 import os
 import platform
+import subprocess
 from tkinter import messagebox
 from Token import Token
 from Errors import Lexical_Errors
@@ -18,7 +19,7 @@ class Css_Lex:
         self.Data_text_temp=""
         self.index=""
 
-    def Analyze_text(self,data_text,file_N):
+    def Analyze_text_Css(self,data_text,file_N):
         self.file_Name=file_N
         Lexical_Aux=""
         counter=0
@@ -438,7 +439,7 @@ class Css_Lex:
         self.column=0
         self.status=0
         self.path_file=""
-        self.file_name=""
+        self.file_Name=""
         self.Data_text_temp=""
         self.index=""
 
@@ -456,10 +457,10 @@ class Css_Lex:
         temp_path=temp_path_W
         if(temp_path_W!=""):
             temp_path=""
-            temp_path=temp_path_W.split('PATHW:',1)
+            temp_path=temp_path_W.lower().split("output",1)
             temp_path=temp_path[1]
             otherStr = self.replaceMultiple(temp_path, ['!', '*', '?','<','>'] , "")
-            temp_path=otherStr
+            temp_path="C:/Users/bryan/Desktop/P1/Output"+otherStr.strip()
             if(temp_path[len(temp_path)-1]=="/"):
                 #we slice the string
                 temp_path=temp_path[:len(temp_path)-1]
@@ -468,7 +469,7 @@ class Css_Lex:
                 temp_path=temp_path.replace("/","//")
             if(os.path.exists(temp_path)==False):
                 try:
-                    os.makedirs(temp_path,mode=0o444)
+                    os.makedirs(temp_path,mode=0o777)
                 except OSError:
                     print("Creation of the directory %s failed" % temp_path)
                     return ""
@@ -510,7 +511,7 @@ class Css_Lex:
         file_temp.write("<title>Errors Report</title>\n")
         file_temp.write("</head>\n")
         file_temp.write("<body>\n")
-        file_temp.write("<h1 class="'"text-center"'"style="'"margin-top:20px;"'">jS Report (Errors) List</h1>\n")
+        file_temp.write("<h1 class="'"text-center"'"style="'"margin-top:20px;"'">Css Report (Errors) List</h1>\n")
         file_temp.write("<div class="'"container"'" style="'"margin-top:20px;"'">\n")
         file_temp.write("<table class="'"table table-striped"'">\n")
         file_temp.write("<thead class="'"bg-dark"'" style="'"color:white;"'">\n")
@@ -543,12 +544,12 @@ class Css_Lex:
         completeName=None
         if(path_token==""):
             messagebox.showwarning(title="File", message="Alternative Path was created")
-            pt=r'C:/user/output/css'
+            pt=r'C:/Users/bryan/Desktop/P1/Output/css'
             if(os.path.exists(pt)==True):
-                completeName = os.path.join(pt, self.file_name)
+                completeName = os.path.join(pt, self.file_Name)
             else:
                 os.makedirs(pt,mode=0o444)
-                completeName = os.path.join(pt, self.file_name)
+                completeName = os.path.join(pt, self.file_Name)
             if(os.path.exists(completeName)):
                     os.remove(completeName)
                     file1 = open(completeName, "w")
@@ -559,13 +560,17 @@ class Css_Lex:
                 file1.write(self.Data_text_temp)
                 file1.close()           
         else:
-            print("name")
-            print(self.file_Name)
-            completeName = os.path.join(path_token, self.file_name)
-            if(os.path.isfile(completeName)==False):
-                file1 = open(path_token, "w")
+            complete_path=path_token+"//"+self.file_Name
+            if(os.path.isfile(complete_path)==True):
+                os.remove(complete_path)
+                file1 = open(complete_path, "w")
                 file1.write(self.Data_text_temp)
-                file1.close()
+                file1.close() 
             else:
-                print("yes")
+                print("css")
+                print(self.file_Name)
+                print(complete_path)
+                file1 = open(complete_path, "w")
+                file1.write(self.Data_text_temp)
+                file1.close()  
             

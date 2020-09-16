@@ -471,10 +471,10 @@ class Js_Lex:
         temp_path=temp_path_W
         if(temp_path_W!=""):
             temp_path=""
-            temp_path=temp_path_W.split('PATHW:',1)
+            temp_path=temp_path_W.lower().split("output",1)
             temp_path=temp_path[1]
             otherStr = self.replaceMultiple(temp_path, ['!', '*', '?','<','>'] , "")
-            temp_path=otherStr
+            temp_path="C:/Users/bryan/Desktop/P1/Output"+otherStr
             if(temp_path[len(temp_path)-1]=="/"):
                 #we slice the string
                 temp_path=temp_path[:len(temp_path)-1]
@@ -483,7 +483,7 @@ class Js_Lex:
                 temp_path=temp_path.replace("/","//")
             if(os.path.exists(temp_path)==False):
                 try:
-                    os.makedirs(temp_path,mode=0o444)
+                    os.makedirs(temp_path,mode=0o777)
                 except OSError:
                     print("Creation of the directory %s failed" % temp_path)
                     return ""
@@ -585,7 +585,7 @@ class Js_Lex:
         completeName=None
         if(path_token==""):
             messagebox.showwarning(title="File", message="Alternative Path was created")
-            pt=r'C:/user/output/js'
+            pt=r'C:/Users/bryan/Desktop/P1/Output/js'
             if(os.path.exists(pt)==True):
                 completeName = os.path.join(pt, self.file_name)
             else:
@@ -608,6 +608,8 @@ class Js_Lex:
                 file1.write(self.Data_text_temp)
                 file1.close() 
             else:
+                print("js")
+                print(complete_path)
                 file1 = open(complete_path, "w")
                 file1.write(self.Data_text_temp)
                 file1.close()  

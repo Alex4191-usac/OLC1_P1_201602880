@@ -271,7 +271,7 @@ class Html_lex:
             temp_path=temp_path.replace("/","//")
             if(os.path.exists(temp_path)==False):
                 try:
-                    os.makedirs(temp_path,mode=0o444)
+                    os.makedirs(temp_path,mode=0o777)
                 except OSError:
                     print("Creation of the directory %s failed" % temp_path)
                     return ""
