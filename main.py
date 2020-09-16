@@ -1,4 +1,6 @@
 from tkinter import Tk,Menu,scrolledtext,END,filedialog,INSERT,messagebox
+import os
+import subprocess
 from Html_Analyzer import Html_lex
 from Js_Analyzer import Js_Lex
 from Css_Analyzer import Css_Lex
@@ -36,6 +38,11 @@ class Window_app:
 
         tools_menu=Menu(menu_bar, tearoff=0)
         tools_menu.add_command(label="Analyze",command=self.Analyzer)
+
+        help_menu=Menu(menu_bar,tearoff=0)
+        help_menu.add_command(label="User guide",command=self.Open_User_Guide)
+        help_menu.add_command(label="Tech guide")
+        help_menu.add_command(label="About", command=self.About)
 
         menu_bar.add_cascade(label="File",menu=file_menu)
         menu_bar.add_cascade(label="Tools",menu=tools_menu)
@@ -173,6 +180,12 @@ class Window_app:
             
         else:
             messagebox.showerror(title="Warning", message="There's no File to Analyze")
+
+    def Open_User_Guide(self):
+        subprocess.Popen('user_manual.pdf',shell=True)
+
+    def About(self):
+        messagebox.showinfo(title="Developer Info", message="Alex4191\nId: 201602880")
 
 if __name__ == "__main__":
     gui_window = Tk()
