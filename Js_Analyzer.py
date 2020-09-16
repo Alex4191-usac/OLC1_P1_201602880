@@ -1,6 +1,7 @@
 import os
 import platform
 import subprocess
+from tkinter import messagebox
 from Token import Token
 from Errors import Lexical_Errors
 
@@ -575,22 +576,39 @@ class Js_Lex:
 
     def Report_Decision(self):
         if(len(self.Errors_Html_Js)==0):# clean Execution ( no errors founded !!!)
-            #self.Tokens_Report()
             self.Graphiz_Report_Js()     
         else:
             self.Errores_Report()
             self.Graphiz_Report_Js()    
-
-        
-        #path_token=self.create_path_Js(self.path_file)
-        """if(path_token==""):
-            os.makedirs(pt,mode=0o444)
-            completeName = os.path.join(pt, self.file_name)         
-            file1 = open(completeName, "w")
-            file1.write(self.Data_text_temp)
-            file1.close()
+ 
+        path_token=self.create_path_Js(self.path_file)
+        completeName=None
+        if(path_token==""):
+            messagebox.showwarning(title="File", message="Alternative Path was created")
+            pt=r'C:/user/output/js'
+            if(os.path.exists(pt)==True):
+                completeName = os.path.join(pt, self.file_name)
+            else:
+                os.makedirs(pt,mode=0o444)
+                completeName = os.path.join(pt, self.file_name)
+            if(os.path.exists(completeName)):
+                    os.remove(completeName)
+                    file1 = open(completeName, "w")
+                    file1.write(self.Data_text_temp)
+                    file1.close()
+            else:         
+                file1 = open(completeName, "w")
+                file1.write(self.Data_text_temp)
+                file1.close()           
         else:
-            completeName = os.path.join(path_token, self.file_name)  
-            file1 = open(completeName, "w")
-            file1.write(self.Data_text_temp)
-            file1.close()"""
+            completeName = os.path.join(path_token, self.file_name)
+            if(os.path.exists(completeName)):
+                os.remove(completeName)
+                file1 = open(completeName, "w")
+                file1.write(self.Data_text_temp)
+                file1.close()
+            else:  
+                file1 = open(completeName, "w")
+                file1.write(self.Data_text_temp)
+                file1.close()
+            
