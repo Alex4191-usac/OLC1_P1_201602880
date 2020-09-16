@@ -1,0 +1,13 @@
+digraph firstGraph{
+node[shape=circle]S0 -> S27[label="Letter"];
+S27->S27[label="Letter"];
+S27[shape=doublecircle, color="green"]
+S0 -> S28[label="Quoute"]
+S28->S28[label="All"]
+S28->S29[label="Quote"]
+S21[shape=doublecircle, color="orange"]
+S0-> S1[label="forward-slash"]
+S1->S21[label="forward-slash"]
+S21->S21[label="All"]
+S21[shape=doublecircle, color="gray"]
+}

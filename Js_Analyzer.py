@@ -1,5 +1,6 @@
 import os
 import platform
+import subprocess
 from Token import Token
 from Errors import Lexical_Errors
 
@@ -264,7 +265,6 @@ class Js_Lex:
                 else:
                     temp_status=0
                     self.Errors_Html_Js.append(Lexical_Errors(self.row,self.column,data_text[counter-1],"The Symbol "+temp_character+"is not part of the Alphabet Language"))
-                    self.column+=1
             elif(self.status==17):#STATE NUMBER 17
                 self.Token_Array_Js.append(Token(18,Lexical_Aux,"and",self.row,self.column,""))
                 Lexical_Aux=""
@@ -313,7 +313,7 @@ class Js_Lex:
                         self.column+=1
             elif(self.status==21):#STATE NUMBER 20
                 if(assci_code==10):# Token enter
-                    path_t=(Lexical_Aux.find("PATHW"))
+                    path_t=(Lexical_Aux.find("PATHW:"))
                     if(path_t!=-1): # its a file path
                         self.path_file=Lexical_Aux
                         self.Token_Array_Js.append(Token(21,Lexical_Aux,"path",self.row,self.column,""))
@@ -395,7 +395,7 @@ class Js_Lex:
                     counter-=1
                     temp_status=0    
             elif(self.status==28): # STATE NUMBER 28
-                if(assci_code==34):
+                if(assci_code==34):#token 
                     temp_status=29
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
@@ -536,26 +536,50 @@ class Js_Lex:
         os.system('Error_Js_Report.html')
 
 
+    def get_Nodes_String(self,Tokens_Array):
+        nodes=""
+        counter=0
+        id_iterator=False
+        chain_iterator=False
+        single_iterator=False
+        for temp in Tokens_Array:
+            
+            if (counter>=3):
+                break
+            else:
+                if((temp.get_TypeT()=="single comment" or temp.get_TypeT()=="path" ) and single_iterator==False):
+                    single_iterator=True
+                    nodes+="S0-> S1[label="'"forward-slash"'"]\nS1->S21[label="'"forward-slash"'"]\nS21->S21[label="'"All"'"]\nS21[shape=doublecircle, color="'"gray"'"]\n"
+                    counter+=1
+                elif(temp.get_TypeT()=="Identifier" and id_iterator==False):
+                    id_iterator=True
+                    nodes+="S0 -> S27[label="'"Letter"'"];\nS27->S27[label="'"Letter"'"];\nS27[shape=doublecircle, color="'"green"'"]\n"
+                    counter+=1
+                elif(temp.get_TypeT()=="Double Quote comment" and chain_iterator==False):
+                    chain_iterator=True
+                    nodes+="S0 -> S28[label="'"Quoute"'"]\nS28->S28[label="'"All"'"]\nS28->S29[label="'"Quote"'"]\nS29[shape=doublecircle, color="'"orange"'"]\n"
+                    counter+=1
+        return nodes
 
-    def print_SizeTokens(self):
-        for token_values in self.Token_Array_Js:
-              print(token_values.get_Token())
-              print(token_values.get_TypeT())
-              print(token_values.get_Row())
-              print(token_values.get_Column())
-              print("el index")
-              print(token_values.get_Index())
+
+    def Graphiz_Report_Js(self):
+        f=open('Graph.dot','w')
+        f.write('digraph firstGraph{\n')
+        f.write('node[shape=circle]')
+        f.write(self.get_Nodes_String(self.Token_Array_Js))
+        f.write('}')
+        f.close()
+        os.system('dot Graph.dot -Tpng -o Graph.png')
+        os.system('Graph.png')
+
 
     def Report_Decision(self):
         if(len(self.Errors_Html_Js)==0):# clean Execution ( no errors founded !!!)
             #self.Tokens_Report()
-            self.print_SizeTokens()
-            print("grafo")        
+            self.Graphiz_Report_Js()     
         else:
-            print("TIENE eRORORES")
-            #self.Tokens_Report()
-            self.print_SizeTokens()
             self.Errores_Report()
+            self.Graphiz_Report_Js()    
 
         
         #path_token=self.create_path_Js(self.path_file)
