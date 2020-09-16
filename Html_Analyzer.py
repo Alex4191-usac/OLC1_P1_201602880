@@ -87,13 +87,13 @@ class Html_lex:
                     self.Data_text_temp+=temp_character #
                     self.column+=1
                 else:
-                    self.Token_Array.append(Token(1,Lexical_Aux,"Less-than sign",self.row,self.column))
+                    self.Token_Array.append(Token(1,Lexical_Aux,"Less-than sign",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
                     #self.column+=1
             elif(self.status==2):# STATE NUMBER 2
-                self.Token_Array.append(Token(2,Lexical_Aux,"greater-than sign",self.row,self.column))
+                self.Token_Array.append(Token(2,Lexical_Aux,"greater-than sign",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
@@ -116,7 +116,7 @@ class Html_lex:
                         self.Data_text_temp+=temp_character #
                         self.column+=1
                     else:
-                        self.Token_Array.append(Token(3,Lexical_Aux,self.Vef_Id(Lexical_Aux),self.row,self.column))
+                        self.Token_Array.append(Token(3,Lexical_Aux,self.Vef_Id(Lexical_Aux),self.row,self.column,""))
                         Lexical_Aux=""
                         counter-=1
                         temp_status=0
@@ -132,13 +132,13 @@ class Html_lex:
                     self.Data_text_temp+=temp_character #
                     self.column+=1 
                 else:
-                    self.Token_Array.append(Token(4,Lexical_Aux,"forward-slash",self.row,self.column))
+                    self.Token_Array.append(Token(4,Lexical_Aux,"forward-slash",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0
             elif(self.status==5): # STATE NUMBER 5
                 if(assci_code==10):# enter Key
-                    self.Token_Array.append(Token(5,Lexical_Aux,"Path",self.row,self.column))
+                    self.Token_Array.append(Token(5,Lexical_Aux,"Path",self.row,self.column,""))
                     self.path_file=Lexical_Aux
                     Lexical_Aux=""
                     counter-=1
@@ -149,7 +149,7 @@ class Html_lex:
                    #self.Data_text_temp+=temp_character #
                    self.column+=1
             elif(self.status==6): # STATE NUMBER 6
-                self.Token_Array.append(Token(6,Lexical_Aux,"Equality sign",self.row,self.column))
+                self.Token_Array.append(Token(6,Lexical_Aux,"Equality sign",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
@@ -165,14 +165,14 @@ class Html_lex:
                     self.Data_text_temp+=temp_character #
                 self.column+=1
             elif(self.status==8): # STATE NUMBER 8
-                self.Token_Array.append(Token(8,Lexical_Aux,"Double Quote comment",self.row,self.column))
+                self.Token_Array.append(Token(8,Lexical_Aux,"Double Quote comment",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0
                 #self.column+=1
             elif(self.status==9):
                 if(assci_code==60):
-                    self.Token_Array.append(Token(8,Lexical_Aux,"Text",self.row,self.column))
+                    self.Token_Array.append(Token(8,Lexical_Aux,"Text",self.row,self.column,""))
                     Lexical_Aux=""
                     counter-=1
                     temp_status=0 
@@ -229,7 +229,7 @@ class Html_lex:
                     self.Data_text_temp+=temp_character
                 self.column+=1 
             elif(self.status==15):#STATE NUMBER 15
-                self.Token_Array.append(Token(8,Lexical_Aux,"multiline comment",self.row,self.column))
+                self.Token_Array.append(Token(8,Lexical_Aux,"multiline comment",self.row,self.column,""))
                 Lexical_Aux=""
                 counter-=1
                 temp_status=0

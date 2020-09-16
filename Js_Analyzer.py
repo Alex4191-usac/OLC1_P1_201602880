@@ -314,7 +314,7 @@ class Js_Lex:
                         self.column+=1
             elif(self.status==21):#STATE NUMBER 20
                 if(assci_code==10):# Token enter
-                    path_t=(Lexical_Aux.find("PATHW:"))
+                    path_t=(Lexical_Aux.lower().find("pathw:"))
                     if(path_t!=-1): # its a file path
                         self.path_file=Lexical_Aux
                         self.Token_Array_Js.append(Token(21,Lexical_Aux,"path",self.row,self.column,""))
@@ -554,7 +554,7 @@ class Js_Lex:
                     counter+=1
                 elif(temp.get_TypeT()=="Identifier" and id_iterator==False):
                     id_iterator=True
-                    nodes+="S0 -> S27[label="'"Letter"'"];\nS27->S27[label="'"Letter"'"];\nS27[shape=doublecircle, color="'"green"'"]\n"
+                    nodes+="S0 -> S27[label="'"Letter"'"];\nS27->S27[label="'"Letter"'"];\nS27[shape=doublecircle, color="'"red"'"]\n"
                     counter+=1
                 elif(temp.get_TypeT()=="Double Quote comment" and chain_iterator==False):
                     chain_iterator=True
@@ -601,14 +601,17 @@ class Js_Lex:
                 file1.write(self.Data_text_temp)
                 file1.close()           
         else:
-            completeName = os.path.join(path_token, self.file_name)
-            if(os.path.exists(completeName)):
-                os.remove(completeName)
-                file1 = open(completeName, "w")
+            complete_path=path_token+"//"+self.file_name
+            if(os.path.isfile(complete_path)==True):
+                os.remove(complete_path)
+                file1 = open(complete_path, "w")
                 file1.write(self.Data_text_temp)
-                file1.close()
-            else:  
-                file1 = open(completeName, "w")
+                file1.close() 
+            else:
+                file1 = open(complete_path, "w")
                 file1.write(self.Data_text_temp)
-                file1.close()
+                file1.close()  
             
+            
+                
+               

@@ -60,7 +60,7 @@ class Window_app:
             self.name_file=""
             self.file_open = filedialog.askopenfilename(title = "Open File", initialdir = "C:/",filetypes=[("JavaScript Files","*.js"),
             ("Html Files","*.html"),("Css Files","*.css"),("Rmt Files","*.rmt")])
-            text_data = open(self.file_open, encoding='utf-8')
+            text_data = open(self.file_open, encoding='windows-1252')
             data_extension=str(text_data.name)
             sub_name=text_data.name.split("/")
             self.name_file=sub_name[len(sub_name)-1]
@@ -155,17 +155,15 @@ class Window_app:
     
 
     #test js
-        temp_jsAnalizer.Analyze_text_Js(self.text_area.get(1.0,END),self.name_file)
-        self.Tokens_Color(temp_jsAnalizer.Token_Array_Js)
         
-        """if(self.type_Analizer=="js"):
+        if(self.type_Analizer=="js"):
             temp_jsAnalizer.Analyze_text_Js(self.text_area.get(1.0,END),self.name_file)
             self.Tokens_Color(temp_jsAnalizer.Token_Array_Js)
         elif(self.type_Analizer=="html"):
             temp_htmlAnalyzer.Analyze_text(self.text_area.get(1.0, END),self.name_file)
             self.Tokens_Color(temp_htmlAnalyzer.Token_Array)
         elif(self.type_Analizer=="css"):
-            temp_CssAnalyzer.Analyze_text(self.text_area.get(1.0, END))
+            temp_CssAnalyzer.Analyze_text(self.text_area.get(1.0, END),self.name_file)
             self.Tokens_Color(temp_CssAnalyzer.Token_Array_Css)
             self.text_console.insert(INSERT, temp_CssAnalyzer.Log_Analyzer)
         elif(self.type_Analizer=="rmt"):
@@ -174,7 +172,7 @@ class Window_app:
             self.text_console.insert(INSERT, temp_RmtAnalyzer.result_board)
             
         else:
-            messagebox.showerror(title="Warning", message="There's no File to Analyze")"""
+            messagebox.showerror(title="Warning", message="There's no File to Analyze")
 
 if __name__ == "__main__":
     gui_window = Tk()
