@@ -64,6 +64,11 @@ class Html_lex:
                     Lexical_Aux+=temp_character
                     self.Data_text_temp+=temp_character #
                     self.column+=1
+                elif(assci_code==39): # token '
+                    temp_status=16
+                    Lexical_Aux+=temp_character
+                    self.Data_text_temp+=temp_character #
+                    self.column+=1
                 else:
                     if(assci_code>=00 and assci_code <=32 and assci_code!=10):
                         print("space")
@@ -240,6 +245,22 @@ class Html_lex:
                 counter-=1
                 temp_status=0
                 #self.column+=1
+            elif(self.status==16): # STATE NUMBER 16
+                if(assci_code==39):
+                    temp_status=17
+                    Lexical_Aux+=temp_character
+                    self.Data_text_temp+=temp_character #
+                else:
+                    temp_status=16
+                    Lexical_Aux+=temp_character
+                    self.Data_text_temp+=temp_character #
+                self.column+=1
+            elif(self.status==17):#STATE NUMBER 15
+                self.Token_Array.append(Token(16,Lexical_Aux,"Single Quote comment",self.row,self.column,""))
+                Lexical_Aux=""
+                counter-=1
+                temp_status=0
+                #self.column+=1
             else:
                 print("ANALYZER ERROR")
        
@@ -404,7 +425,6 @@ class Html_lex:
         if(len(self.Errors_Html)==0):# clean Execution ( no errors founded !!!)
             pass
         else:
-            self.Tokens_Report()
             self.Errores_Report()
         print(self.path_file)
         path_token=self.create_path_Js(self.path_file)

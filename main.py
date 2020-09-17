@@ -41,7 +41,7 @@ class Window_app:
 
         help_menu=Menu(menu_bar,tearoff=0)
         help_menu.add_command(label="User guide",command=self.Open_User_Guide)
-        help_menu.add_command(label="Tech guide")
+        help_menu.add_command(label="Tech guide",command=self.Open_Tec_Guide)
         help_menu.add_command(label="About", command=self.About)
 
         menu_bar.add_cascade(label="File",menu=file_menu)
@@ -183,6 +183,9 @@ class Window_app:
 
     def Open_User_Guide(self):
         subprocess.Popen('user_manual.pdf',shell=True)
+    
+    def Open_Tec_Guide(self):
+        subprocess.Popen('Tec_manual.pdf',shell=True)
 
     def About(self):
         messagebox.showinfo(title="Developer Info", message="Alex4191\nId: 201602880")
